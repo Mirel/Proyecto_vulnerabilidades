@@ -1,95 +1,110 @@
-# Proyecto_vulnerabilidades
 # Metodología de análisis de vulnerabilidades y explotación — Proyecto individual
-**Autor:** Mirelle Candida 
-**Fecha:** 11-2026
+
+**Autor:** Mirelle Candida
+**Fecha:** 10-2026
+**Repositorio:** (pon aquí la URL pública de tu GitHub)
+
+---
 
 ## Resumen ejecutivo
-Este proyecto describe una metodología aplicada al análisis de vulnerabilidades y al desarrollo controlado de exploits (en entornos de laboratorio). Incluye: metodología técnica, dos casos prácticos analizados y un flujo de investigación ante vulnerabilidades desconocidas (0-days). Todo el trabajo se ha realizado en un entorno de laboratorio aislado y reproducible.
+Este proyecto describe una metodología aplicada al análisis de vulnerabilidades y al desarrollo controlado de exploits (en entornos de laboratorio). Incluye: la metodología técnica, dos casos prácticos analizados (uno real y uno propio) y un flujo de investigación para vulnerabilidades desconocidas (0-days). Todo el trabajo se ha realizado en entornos de laboratorio aislados y reproducibles.
 
 ---
 
 ## Índice
-- [Metodología](#metodología)
-- [Herramientas y entorno](#herramientas-y-entorno)
-- [Casos de estudio](#casos-de-estudio)
-- [Aproximación a 0-days (flujo)](#aproximación-a-0-days-flujo)
-- [Experimentos realizados y resultados](#experimentos-realizados-y-resultados)
-- [Conclusiones y propuestas de mitigación](#conclusiones-y-propuestas-de-mitigación)
-- [Repositorios / código / evidencia](#repositorios--código--evidencia)
+- [Metodología](#metodología)  
+- [Herramientas y entorno](#herramientas-y-entorno)  
+- [Casos de estudio](#casos-de-estudio)  
+- [Aproximación a 0-days (flujo)](#aproximación-a-0-days-flujo)  
+- [Experimentos realizados y resultados](#experimentos-realizados-y-resultados)  
+- [Conclusiones y propuestas de mitigación](#conclusiones-y-propuestas-de-mitigación)  
+- [Repositorio / evidencia](#repositorio--evidencia)
 
 ---
 
 ## Metodología
+En este proyecto aplico una metodología reproducible y profesional orientada a extraer la mayor cantidad de información de forma segura y responsable:
+
 1. **Preparación**
-   - Definir alcance, sistemas y snapshots.
-   - Crear entornos aislados (VMs) y backups.
+   - Definir alcance, activos y snapshots.  
+   - Crear entornos aislados (VMs) y backups (snapshots).
+
 2. **Reconocimiento**
-   - Pasivo (logs, documentación, feeds).
-   - Activo (nmap, banner grabbing, enumeración de servicios).
+   - Pasivo: revisión de documentación y artefactos disponibles.  
+   - Activo: `nmap`, `arp-scan`, banner grabbing y enumeración de servicios.
+
 3. **Triage**
-   - Clasificar vectores por criticidad (CVSS-like).
-   - Priorizar objetivos para análisis profundo.
+   - Clasificar vectores por criticidad (criterios basados en CVSS, criticidad de los servicios, exposición en red).
+
 4. **Investigación técnica**
-   - Fuzzing para encontrar condiciones de fallo.
-   - Reversing para localizar root cause.
-   - Diffing entre versiones si procede.
+   - Fuzzing para encontrar condiciones de fallo.  
+   - Reversing para localizar la root cause.  
+   - Diffing entre versiones si procede.  
+   - Análisis simbólico para condiciones complejas.
+
 5. **Validación / PoC**
-   - Pruebas controladas en laboratorio. No publicar exploits en entornos no autorizados.
+   - Pruebas controladas en laboratorio (solo binarios y sistemas de prueba propios o con autorización).
+
 6. **Mitigación y reporte**
-   - Recomendaciones técnicas, parches y validación de mitigaciones.
+   - Recomendaciones técnicas, parches propuestos y validación de mitigaciones.
 
 ---
 
-## Herramientas y comandos (ejemplo)
-- Reconocimiento: `nmap -sS -sV -O -p- -T4 <IP> -oA fullscan`
-- Reversing: `radare2 -A <binary>`, `ghidra` (GUI), `objdump -d <binary>`
-- Debugging: `gdb -q <binary>`, con `pwndbg` o `gef`
-- Fuzzing (AFL example): instrumentar binario y ejecutar `afl-fuzz -i in -o out -- ./target @@`
-- Diffing: `radiff2 old new` o `bindiff` (cuando aplique)
-- Symbolic analysis: `python3 -c "import angr; ..."`
+## Herramientas y entorno
+**Entorno recomendado (laboratorio):**
+- Host: macOS o Linux (máquina atacante)
+- VM víctima: Debian/Ubuntu (UTM/VirtualBox)
+- Snapshots activados antes de cada experimento
 
-> Nota: no se incluyen instrucciones para crear exploits para sistemas no autorizados. Todas las pruebas se realizan en entornos controlados.
-
----
-
-## Caso 1 — [Nombre / CVE]
-**Fuente:** (link al write-up o CVE)  
-**Resumen:** breve descripción del bug.  
-**Análisis aplicado:** pasos que seguiste (fuzzing / reversing / diffing).  
-**Hallazgos:** resumen técnico (qué fallaba, por qué).  
-**Lecciones y mitigaciones sugeridas.**
+**Herramientas clave:**
+- Reconocimiento: `nmap`, `arp-scan`, `netcat`
+- Reversing: `radare2`, `ghidra`, `objdump`, `strings`
+- Debugging: `gdb` + `pwndbg`/`gef`
+- Fuzzing: `afl++`, `honggfuzz`
+- Diffing: `radiff2` (radare2), `bindiff` / `diaphora`
+- Symbolic execution: `angr`
+- Scripting: `python3`, `pwntools` (solo para laboratorio)
 
 ---
 
-## Caso 2 — Binary propio (laboratorio)
-**Fuente:** binario desarrollado para la práctica (`code/vuln.c`)  
-**Objetivo:** practicar fuzzing y reversing sin depender de exploits públicos.  
-**Análisis:** logs, comandos y capturas.  
-**Resultado:** crash minimal testcases, localización de la función vulnerable, mitigaciones aplicadas.
+## Casos de estudio (resumen)
+- **Caso 1 (real):** Análisis de CVE [ejemplo] — write-up, root cause y mitigación. (ver `docs/casos/ejemplo1.md`)
+- **Caso 2 (laboratorio):** Binario vulnerable creado por mí para practicar fuzzing y reversing. (ver `docs/casos/ejemplo2.md`)
 
 ---
 
 ## Aproximación a 0-days (flujo práctico)
-1. **Fuzzing inicial** con corpus básico → identificar crash.
-2. **Crash triage**: convertir a testcase mínimo (afl-tmin / afl-cmin).
-3. **Debugging**: reproducir crash en gdb, localizar IP/offset.
-4. **Reversing**: abrir binario en radare2/ghidra para entender control flow y root cause.
-5. **Exploración simbólica** (angr) para condiciones complejas.
-6. **Mitigación**: proponer parches y validar.
+1. **Fuzzing**: instrumentar el binario (AFL/honggfuzz), ejecutar con corpus y capturar crashes.  
+2. **Crash triage**: reducir testcases (`afl-tmin`) y agrupar por signo de fallo.  
+3. **Debugging**: reproducir crash en `gdb`, localizar instrucción y stack.  
+4. **Reversing**: abrir en `radare2`/`ghidra`, identificar sink y condiciones.  
+5. **Exploración simbólica** (opcional): con `angr` para ramas complejas.  
+6. **Construcción de PoC**: solo en laboratorio, con mitigaciones y rollback plan.  
+7. **Documentación**: cada comando + salida + interpretación.
 
 ---
 
-## Experimentos realizados (evidencias)
-- Lista de comandos ejecutados (archivados en `evidencia/`).
-- Capturas de pantalla y logs en `evidencia/screenshots/`.
-- Código fuente y testcases reducidos en `code/`.
+## Experimentos realizados y evidencia
+Toda la evidencia generada (salidas de comandos, logs de fuzzers, capturas, código fuente de binarios de laboratorio, testcases reducidos) se encuentra en la carpeta `evidencia/` del repositorio.
 
 ---
 
 ## Conclusiones
-- Resumen de resultados, aprendizajes y roadmap futuro (p.ej. hardening, tests CI con fuzzers).
+- La planificación y calidad del reconocimiento condicionan el éxito del análisis.  
+- La combinación de fuzzing + reversing + diffing es el flujo más eficiente para 0-days.  
+- Importante: documentar cada paso y actuar solo dentro de un entorno controlado y autorizado.
+
+---
+
+## Cómo reproducir (resumen rápido)
+1. Clona el repo y revisa `docs/` y `evidencia/`.  
+2. Prepara tu VM objetivo y toma snapshot.  
+3. Ejecuta los scripts de `scripts/` (si los hay) o los comandos listados en cada caso.  
+4. Genera report PDF (p.ej. con `pandoc`).
 
 ---
 
 ## Referencias
-- (Enumera artículos, vídeos, write-ups, herramientas que consultaste)
+- Lista de artículos, write-ups y herramientas consultadas (inclúyelos aquí en tu versión final).
+
+---
