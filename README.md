@@ -67,13 +67,13 @@ En este proyecto aplico una metodología reproducible y profesional orientada a 
 
 ---
 
-## Casos de estudio (resumen)
+## Casos de estudio
 - **Caso 1 (real):** Análisis de CVE [ejemplo] — write-up, root cause y mitigación. (ver `docs/casos/ejemplo1.md`)
 - **Caso 2 (laboratorio):** Binario vulnerable creado por mí para practicar fuzzing y reversing. (ver `docs/casos/ejemplo2.md`)
 
 ---
 
-## Aproximación a 0-days (flujo práctico)
+## Aproximación a 0-days flujo
 1. **Fuzzing**: instrumentar el binario (AFL/honggfuzz), ejecutar con corpus y capturar crashes.  
 2. **Crash triage**: reducir testcases (`afl-tmin`) y agrupar por signo de fallo.  
 3. **Debugging**: reproducir crash en `gdb`, localizar instrucción y stack.  
@@ -84,19 +84,19 @@ En este proyecto aplico una metodología reproducible y profesional orientada a 
 
 ---
 
-## Experimentos realizados y evidencia
+## Experimentos realizados y resultados
 Toda la evidencia generada (salidas de comandos, logs de fuzzers, capturas, código fuente de binarios de laboratorio, testcases reducidos) se encuentra en la carpeta `evidencia/` del repositorio.
 
 ---
 
-## Conclusiones
+## Conclusiones y propuesta de mitigación
 - La planificación y calidad del reconocimiento condicionan el éxito del análisis.  
 - La combinación de fuzzing + reversing + diffing es el flujo más eficiente para 0-days.  
 - Importante: documentar cada paso y actuar solo dentro de un entorno controlado y autorizado.
 
 ---
 
-## Cómo reproducir (resumen rápido)
+## Cómo reproducir
 1. Clona el repo y revisa `docs/` y `evidencia/`.  
 2. Prepara tu VM objetivo y toma snapshot.  
 3. Ejecuta los scripts de `scripts/` (si los hay) o los comandos listados en cada caso.  
