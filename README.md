@@ -42,7 +42,7 @@ La estrategia combina fuzzing (AFL++), diffing (BinDiff/Diaphora) y reversing av
 ## 📊 Visualización interactiva
 
 He creado una representación visual del flujo de análisis y fases metodológicas:  
-➡️ **Abrir versión interactiva:** [`index.html`](index.html)
+➡️ **Abrir versión interactiva:** [`flujo-análisis.html`](flujo-análisis.html)
 
 ---
 
