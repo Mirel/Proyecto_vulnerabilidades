@@ -19,7 +19,7 @@ El trabajo combina teoría, práctica real, ejemplos de vulnerabilidades y un fl
 3. **Síntesis:** desarrollo de PoCs, payloads, bypasses y pruebas controladas.  
 4. **Documentación:** reporte técnico, evaluación CVSS y mitigación de riesgo.
 
-Más detalle en: [`metodologia.md`](metodologia.md)
+Más detalle en: [`metodologia.md`](metodología.md)
 
 ---
 
