@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flujo de Análisis — Metodología</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:#f0f4f8; color:#0a2342}</style>
+</head>
+<body class="p-8">
+  <header class="max-w-4xl mx-auto text-center mb-8">
+    <h1 class="text-4xl font-bold mb-2">Flujo de Análisis de Vulnerabilidades</h1>
+    <p class="text-lg text-slate-600">Visual interactiva del proceso: Detección → Profundización → Síntesis → Documentación</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto grid grid-cols-1 gap-6">
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Foco de Detección</h2>
+      <canvas id="detectionChart" height="200"></canvas>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Tipo de Análisis</h2>
+      <canvas id="analysisChart" height="200"></canvas>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Comparativa de Casos</h2>
+      <canvas id="casesChart" height="200"></canvas>
+    </section>
+  </main>
+
+  <footer class="max-w-4xl mx-auto text-center mt-8 text-sm text-slate-500">
+    <p>Autor: Mirelle Candida — Proyecto de Metodología de Análisis de Vulnerabilidades</p>
+  </footer>
+
+  <script>
+    const detectionCtx = document.getElementById('detectionChart').getContext('2d');
+    const detectionChart = new Chart(detectionCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Escaneo (Nmap)', 'Fuzzing (Burp/boofuzz)', 'Búsqueda CVEs'],
+        datasets: [{ data: [40, 35, 25], backgroundColor: ['#007FFF','#2C5A8C','#50A6D9'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const analysisCtx = document.getElementById('analysisChart').getContext('2d');
+    const analysisChart = new Chart(analysisCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Reversing', 'Debugging'],
+        datasets: [{ data: [55,45], backgroundColor: ['#007FFF','#50A6D9'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const casesCtx = document.getElementById('casesChart').getContext('2d');
+    const casesChart = new Chart(casesCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Stack Overflow', 'Use-After-Free'],
+        datasets: [{ label: 'Complejidad (1-10)', data: [3,8], backgroundColor: ['#007FFF','#2C5A8C'] }]
+      },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, max: 10 } } }
+    });
+  </script>
+</body>
+</html>
+HTML
