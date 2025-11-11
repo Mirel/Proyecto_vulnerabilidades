@@ -79,3 +79,38 @@ Esta metodología permite mantener un flujo **iterativo, profesional y auditable
 El analista se convierte en un **investigador autónomo**, capaz de evolucionar desde CVEs conocidos hacia vulnerabilidades 0-Day reales.
 
 ---
+
+## IV. Aproximación al Descubrimiento de 0-Days
+(...contenido...)
+
+---
+
+## 💻 Herramientas empleadas
+
+| Tipo | Herramientas |
+|------|---------------|
+| Reconocimiento | Nmap, Burp Suite, boofuzz |
+| Análisis estático | Ghidra, IDA Pro |
+| Análisis dinámico | GDB/PEDA, x64dbg |
+| Explotación | pwntools, MSFVenom |
+| Fuzzing y diffing | AFL++, BinDiff, Diaphora |
+| Documentación | Markdown, TailwindCSS, Chart.js |
+
+---
+
+## 🧾 Conclusiones
+
+El trabajo demuestra una visión profesional del análisis de vulnerabilidades:
+- La **calidad del dato** determina la eficacia del exploit.
+- Las herramientas deben integrarse bajo un flujo **metodológico y reproducible**.
+- La **mentalidad analítica y el criterio técnico** son más valiosos que la ejecución mecánica de exploits.
+
+---
+
+## 📚 Referencias
+
+- [NIST NVD](https://nvd.nist.gov/)
+- [Exploit-DB](https://www.exploit-db.com/)
+- [Google Project Zero Blog](https://googleprojectzero.blogspot.com/)
+- [AFL++ Documentation](https://github.com/AFLplusplus/AFLplusplus)
+
